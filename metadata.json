@@ -1,0 +1,6 @@
+{
+  "name": "Brede basiszorg",
+  "description": "Een minimalistische app die automatisch de afbeelding van de huidige week weergeeft uit een specifieke Google Drive map.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

@@ -1,0 +1,31 @@
+{
+  "entities": {
+    "AppSettings": {
+      "title": "AppSettings",
+      "description": "Global application configuration shared across all users.",
+      "type": "object",
+      "properties": {
+        "weekOffset": {
+          "type": "number",
+          "description": "The offset applied to the current ISO week number."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the last update."
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Email or ID of the user who last changed the settings."
+        }
+      },
+      "required": ["weekOffset"]
+    }
+  },
+  "firestore": {
+    "/settings/global": {
+      "schema": "AppSettings",
+      "description": "The single document housing global app settings."
+    }
+  }
+}

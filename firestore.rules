@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: settings
+    // Document ID: global
+    // Fields:
+    //   - weekOffset: number (required) - The week offset
+    //   - updatedAt: string (optional) - ISO date string
+    //   - updatedBy: string (optional) - User email
+    //
+    // ===============================================================
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      // Default admin identified by email
+      return isAuthenticated() && 
+             (request.auth.token.email == "arne.nys@ptiz.be" && request.auth.token.email_verified == true);
+    }
+
+    match /settings/global {
+      // Anyone can read the global settings
+      allow read: if true;
+      
+      // Only the admin can update global settings
+      allow write: if isAdmin() && 
+                   request.resource.data.weekOffset is number &&
+                   request.resource.data.weekOffset >= -52 &&
+                   request.resource.data.weekOffset <= 52;
+    }
+  }
+}
